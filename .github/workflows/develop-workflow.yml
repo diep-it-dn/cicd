@@ -1,0 +1,70 @@
+name: Development CI/CD
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sample1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Checkout cicd-test Repository
+        uses: actions/checkout@v3
+        if: ${{ success() }}
+        with:
+          repository: diep-it-dn/cicd-test
+          token: ${{ secrets.GIT_TOKEN }}
+          fetch-depth: 1
+          persist-credentials: true
+          ref: develop
+          path: cicd-test
+      
+      - name: Update value
+        uses: fjogeleit/yaml-update-action@main
+        with:
+          workDir: cicd-test
+          repository: diep-it-dn/cicd-test
+          token: ${{ secrets.GIT_TOKEN }}
+          valueFile: 'dev/sample1.yaml'
+          propertyPath: 'sample1.value1'
+          value: test1.1
+          branch: develop
+          createPR: false
+          message: 'Update value'
+
+  create-pr:
+    needs: sample1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout cicd-test Repository
+        uses: actions/checkout@v3
+        if: ${{ success() }}
+        with:
+          repository: diep-it-dn/cicd-test
+          token: ${{ secrets.GIT_TOKEN }}
+          fetch-depth: 1
+          persist-credentials: true
+          path: cicd-test-pr
+
+      - name: Auto Create PR
+        uses: fjogeleit/yaml-update-action@main
+        with:
+          workDir: cicd-test-pr
+          repository: diep-it-dn/cicd-test
+          token: ${{ secrets.GIT_TOKEN }}
+          valueFile: 'qa/sample1.yaml'
+          propertyPath: 'sample1.value1'
+          value: test1.1.1
+          branch: deployment/qa
+          targetBranch: qa
+          masterBranchName: main
+          createPR: true
+          message: '[Auto Create PR] Update value'
