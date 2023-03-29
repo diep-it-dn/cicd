@@ -32,7 +32,7 @@ jobs:
           token: ${{ secrets.GIT_TOKEN }}
           valueFile: 'dev/sample1.yaml'
           propertyPath: 'sample1.value1'
-          value: test1.2
+          value: test1.3
           branch: develop
           createPR: false
           message: 'Update value'
@@ -60,7 +60,7 @@ jobs:
           token: ${{ secrets.GIT_TOKEN }}
           valueFile: 'qa/sample1.yaml'
           propertyPath: 'sample1.value1'
-          value: test1.2.1
+          value: test1.3
           branch: deployment/qa2
           targetBranch: qa
           masterBranchName: qa
