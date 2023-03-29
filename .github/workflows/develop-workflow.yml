@@ -32,25 +32,25 @@ jobs:
           token: ${{ secrets.GIT_TOKEN }}
           valueFile: 'dev/sample1.yaml'
           propertyPath: 'sample1.value1'
-          value: test1.6
+          value: test1.7
           branch: develop
           createPR: false
           message: 'Update value'
 
-  # create-pr:
-  #   needs: sample1
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout cicd-test Repository
-  #       uses: actions/checkout@v3
-  #       if: ${{ success() }}
-  #       with:
-  #         repository: diep-it-dn/cicd-test
-  #         token: ${{ secrets.GIT_TOKEN }}
-  #         fetch-depth: 1
-  #         persist-credentials: true
-  #         ref: qa
-  #         path: cicd-test
+  create-pr:
+    needs: sample1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout cicd-test Repository
+        uses: actions/checkout@v3
+        if: ${{ success() }}
+        with:
+          repository: diep-it-dn/cicd-test
+          token: ${{ secrets.GIT_TOKEN }}
+          fetch-depth: 1
+          persist-credentials: true
+          ref: qa
+          path: cicd-test
 
       - name: Auto Create PR
         uses: fjogeleit/yaml-update-action@main
@@ -60,8 +60,8 @@ jobs:
           token: ${{ secrets.GIT_TOKEN }}
           valueFile: 'qa/sample1.yaml'
           propertyPath: 'sample1.value1'
-          value: test1.6
-          branch: deployment/qa2
+          value: test1.7
+          branch: deployment/qa7
           targetBranch: qa
           masterBranchName: qa
           createPR: true
