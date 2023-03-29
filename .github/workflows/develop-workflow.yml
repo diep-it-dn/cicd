@@ -55,7 +55,7 @@ jobs:
       - name: Auto Create PR
         uses: fjogeleit/yaml-update-action@main
         with:
-          workDir: cicd-test-pr
+          workDir: cicd-test
           repository: diep-it-dn/cicd-test
           token: ${{ secrets.GIT_TOKEN }}
           valueFile: 'qa/sample1.yaml'
@@ -63,6 +63,6 @@ jobs:
           value: test1.2.1
           branch: deployment/qa2
           targetBranch: qa
-          masterBranchName: main
+          masterBranchName: qa
           createPR: true
           message: '[Auto Create PR] Update value'
