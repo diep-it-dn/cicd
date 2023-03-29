@@ -32,7 +32,7 @@ jobs:
           token: ${{ secrets.GIT_TOKEN }}
           valueFile: 'dev/sample1.yaml'
           propertyPath: 'sample1.value1'
-          value: test1.10
+          value: test1.11
           branch: develop
           createPR: false
           message: 'Update value'
@@ -53,7 +53,7 @@ jobs:
   #         path: cicd-test
 
       - name: change branch
-        run: git fetch origin && git checkout --track origin/qa
+        run: cd cicd-test && git fetch origin && git checkout --track origin/qa
 
       - name: Auto Create PR
         uses: fjogeleit/yaml-update-action@main
@@ -63,8 +63,8 @@ jobs:
           token: ${{ secrets.GIT_TOKEN }}
           valueFile: 'qa/sample1.yaml'
           propertyPath: 'sample1.value1'
-          value: test1.10
-          branch: deployment/qa10
+          value: test1.11
+          branch: deployment/qa11
           targetBranch: qa
           masterBranchName: qa
           createPR: true
