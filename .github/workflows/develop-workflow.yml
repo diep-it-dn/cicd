@@ -37,23 +37,23 @@ jobs:
           createPR: false
           message: 'Update value'
 
-  # create-pr:
-  #   needs: sample1
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout cicd-test Repository
-  #       uses: actions/checkout@v3
-  #       if: ${{ success() }}
-  #       with:
-  #         repository: diep-it-dn/cicd-test
-  #         token: ${{ secrets.GIT_TOKEN }}
-  #         fetch-depth: 1
-  #         persist-credentials: true
-  #         ref: qa
-  #         path: cicd-test
+  create-pr:
+    needs: sample1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout cicd-test Repository
+        uses: actions/checkout@v3
+        if: ${{ success() }}
+        with:
+          repository: diep-it-dn/cicd-test
+          token: ${{ secrets.GIT_TOKEN }}
+          fetch-depth: 1
+          persist-credentials: true
+          ref: qa
+          path: cicd-test
 
-      - name: change branch
-        run: cd cicd-test && git push && git fetch origin && git checkout --track origin/qa
+      # - name: change branch
+      #   run: cd cicd-test && git push && git fetch origin && git checkout --track origin/qa
 
       - name: Auto Create PR
         uses: fjogeleit/yaml-update-action@main
